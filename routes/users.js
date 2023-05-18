@@ -9,8 +9,4 @@ router.get('/:id', usersData.getSingleUser);
 
 router.post('/', usersData.createUser);
 
-router.put('/:id', usersData.updateUser);
-
-router.delete('/:id', usersData.deleteUser);
-
 module.exports = router;

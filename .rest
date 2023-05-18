@@ -1,9 +1,14 @@
 GET http://localhost:3000/users
 
 ###
-GET http://localhost:3000/users/64660c6838802da0193a6bf5
+GET http://localhost:3000/tasks
+###
+GET http://localhost:3000/users/6466804038802da0193a6c0a
 
 ###
 POST http://localhost:3000/users HTTP/1.1
 Content-Type: application/json
 
+###
+POST http://localhost:3000/tasks HTTP/1.1
+Content-Type: application/json

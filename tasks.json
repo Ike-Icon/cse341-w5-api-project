@@ -1,0 +1,97 @@
+[
+  {
+    "title": "Complete Project Proposal",
+    "description": "Write a detailed proposal for the new project",
+    "status": "In Progress",
+    "priority": "High",
+    "deadline": "2023-06-30",
+    "assignedTo": "John Doe",
+    "additionalFields": {
+      "estimatedHours": 10,
+      "attachments": [
+        "proposal.docx"
+      ]
+    }
+  },
+  {
+    "title": "Design UI Mockups",
+    "description": "Create mockups for the user interface",
+    "status": "To Do",
+    "priority": "Medium",
+    "deadline": "2023-07-05",
+    "assignedTo": "Jane Smith",
+    "additionalFields": {
+      "colorScheme": "Blue and White",
+      "feedbackReceived": false
+    }
+  },
+  {
+    "title": "Implement Backend API",
+    "description": "Develop RESTful API endpoints for the application",
+    "status": "To Do",
+    "priority": "High",
+    "deadline": "2023-07-15",
+    "assignedTo": "Michael Johnson",
+    "additionalFields": {
+      "technologies": [
+        "Node.js",
+        "Express.js"
+      ],
+      "documentationLink": "https://example.com/api-docs"
+    }
+  },
+  {
+    "title": "Write Test Cases",
+    "description": "Create comprehensive test cases for the application",
+    "status": "In Progress",
+    "priority": "Medium",
+    "deadline": "2023-07-10",
+    "assignedTo": "Mary Thompson",
+    "additionalFields": {
+      "automatedTesting": true,
+      "coveragePercentage": 80
+    }
+  },
+  {
+    "title": "Fix Bug #123",
+    "description": "Investigate and fix the reported bug",
+    "status": "In Progress",
+    "priority": "High",
+    "deadline": "2023-07-07",
+    "assignedTo": "John Doe",
+    "additionalFields": {
+      "affectedVersion": "1.2.3",
+      "stepsToReproduce": [
+        "Step 1",
+        "Step 2"
+      ]
+    }
+  },
+  {
+    "title": "Optimize Database Queries",
+    "description": "Improve the performance of database queries",
+    "status": "To Do",
+    "priority": "Medium",
+    "deadline": "2023-07-12",
+    "assignedTo": "Michael Johnson",
+    "additionalFields": {
+      "databaseType": "MongoDB",
+      "indexesCreated": true
+    }
+  },
+  {
+    "title": "Prepare User Documentation",
+    "description": "Write comprehensive user documentation",
+    "status": "To Do",
+    "priority": "Low",
+    "deadline": "2023-07-20",
+    "assignedTo": "Jane Smith",
+    "additionalFields": {
+      "targetAudience": "End-users",
+      "languagesSupported": [
+        "English",
+        "Spanish"
+      ]
+    }
+  }
+]
