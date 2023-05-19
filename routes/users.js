@@ -4,7 +4,7 @@ const { buildSchema } = require('graphql');
 
 const usersData = require('../controllers/users');
 
-// Define your GraphQL schema
+// Define the GraphQL schema users 
 const schema = buildSchema(`
   type User {
     id: ID!
