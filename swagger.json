@@ -5,7 +5,7 @@
     "description": "API documentation for Tasks Management System",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "host": "tasks-mgt-sys-w5.onrender.com",
   "basePath": "/",
   "tags": [
     {
