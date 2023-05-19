@@ -9,4 +9,7 @@ router.get('/', tasksData.getAllTasks);
 
 router.post('/', tasksData.createTask);
 
+router.delete('/:assignedTo', tasksData.deleteTask);
+
+
 module.exports = router;

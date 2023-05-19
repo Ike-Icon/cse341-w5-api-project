@@ -1,9 +1,9 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Tasks Management System",
     "description": "API documentation for Tasks Management System",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "title": "Tasks Management System"
   },
   "host": "localhost:3000",
   "basePath": "/",
@@ -49,36 +49,11 @@
         "description": "Create a new user with the provided information.",
         "parameters": [
           {
-            "name": "body",
             "in": "body",
+            "name": "body",
+            "required": false,
             "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                },
-                "role": {
-                  "example": "any"
-                },
-                "department": {
-                  "example": "any"
-                },
-                "joinDate": {
-                  "example": "any"
-                },
-                "contactNumber": {
-                  "example": "any"
-                },
-                "profilePicture": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/body"
             }
           }
         ],
@@ -103,6 +78,7 @@
           {
             "name": "name",
             "in": "path",
+            "description": "Name of the user",
             "required": true,
             "type": "string"
           }
@@ -148,33 +124,11 @@
         "description": "Create a new task\nwith the provided information.",
         "parameters": [
           {
-            "name": "body",
             "in": "body",
+            "name": "body",
+            "required": false,
             "schema": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "example": "any"
-                },
-                "assignedTo": {
-                  "example": "any"
-                },
-                "description": {
-                  "example": "any"
-                },
-                "status": {
-                  "example": "any"
-                },
-                "priority": {
-                  "example": "any"
-                },
-                "deadline": {
-                  "example": "any"
-                },
-                "additionalFields": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#/definitions/body_1"
             }
           }
         ],
@@ -205,6 +159,7 @@
           {
             "name": "assignedTo",
             "in": "path",
+            "description": "Name of the user",
             "required": true,
             "type": "string"
           }
@@ -216,6 +171,86 @@
           "500": {
             "description": "Internal Server Error"
           }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "body_1": {
+      "type": "object",
+      "required": [
+        "title"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "any"
+        },
+        "assignedTo": {
+          "type": "string",
+          "example": "any"
+        },
+        "description": {
+          "type": "string",
+          "example": "any"
+        },
+        "status": {
+          "type": "string",
+          "example": "any"
+        },
+        "priority": {
+          "type": "string",
+          "example": "any"
+        },
+        "deadline": {
+          "type": "string",
+          "example": "any"
+        },
+        "additionalFields": {
+          "type": "string",
+          "example": "any"
+        }
+      }
+    },
+    "body": {
+      "type": "object",
+      "required": [
+        "email",
+        "name",
+        "password"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "any"
+        },
+        "email": {
+          "type": "string",
+          "example": "any"
+        },
+        "password": {
+          "type": "string",
+          "example": "any"
+        },
+        "role": {
+          "type": "string",
+          "example": "any"
+        },
+        "department": {
+          "type": "string",
+          "example": "any"
+        },
+        "joinDate": {
+          "type": "string",
+          "example": "any"
+        },
+        "contactNumber": {
+          "type": "string",
+          "example": "any"
+        },
+        "profilePicture": {
+          "type": "string",
+          "example": "any"
         }
       }
     }

@@ -1,5 +1,5 @@
 const mongodb = require('../db/connect');
-const ObjectId = require('mongodb').ObjectId;
+// const ObjectId = require('mongodb').ObjectId;
 
 // Function to get all tasks from the database
 const getAllTasks = async (req, res) => {
@@ -13,41 +13,46 @@ const getAllTasks = async (req, res) => {
   }
 };
 
+
+
 // Function to create a new task
 const createTask = async (req, res) => {
-  try {
-    const { title, description, status, priority, deadline, assignedTo, additionalFields } = req.body;
+  const { title, assignedTo, description, status, priority, deadline, additionalFields } = req.body;
 
+  if (!assignedTo) {
+    return res.status(400).json({ message: 'assignedTo field is required' });
+  }
+
+  try {
+    const task = {
+      title: title,
+      assignedTo: '',
+      description: description,
+      status: status,
+      priority: priority,
+      deadline: deadline,
+      additionalFields: additionalFields
+    };
+
+    // Find the user by name
     const user = await mongodb
       .getDb()
       .db('task_mgt_sys')
       .collection('users')
-      .findOne({ _id: new ObjectId(assignedTo) });
+      .findOne({ name: assignedTo });
 
     if (!user) {
       res.status(404).json({ message: 'User not found' });
-      return;
-    }
-
-    const task = {
-      title,
-      description,
-      status,
-      priority,
-      deadline,
-      assignedTo: {
-        id: user._id,
-        name: user.name
-      },
-      additionalFields
-    };
-
-    const response = await mongodb.getDb().db('task_mgt_sys').collection('tasks').insertOne(task);
-
-    if (response.acknowledged) {
-      res.status(201).json({ message: 'Task created successfully' });
     } else {
-      res.status(500).json(response.error || 'Some error occurred while creating the task.');
+      task.assignedTo = user.name; // Assign the task to the user
+
+      const response = await mongodb.getDb().db('task_mgt_sys').collection('tasks').insertOne(task);
+
+      if (response.acknowledged) {
+        res.status(201).json({ message: 'Task created successfully' });
+      } else {
+        res.status(500).json(response.error || 'Some error occurred while creating the task.');
+      }
     }
   } catch (error) {
     console.error(error);
@@ -55,7 +60,32 @@ const createTask = async (req, res) => {
   }
 };
 
+
+// Function to delete a task by the user assigned to it
+const deleteTask = async (req, res) => {
+  try {
+    const taskAssignedTo = req.params.assignedTo; 
+    const response = await mongodb
+      .getDb()
+      .db('task_mgt_sys')
+      .collection('tasks')
+      .deleteOne({ assignedTo: taskAssignedTo });
+    console.log(response);
+    if (response.deletedCount > 0) {
+      res.status(204).send({ message: 'Task created successfully' });
+    } else {
+      res.status(500).json(response.error || 'Some error occurred while deleting the task.');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+
+
 module.exports = {
   getAllTasks,
-  createTask
+  createTask,
+  deleteTask
 };

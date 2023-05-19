@@ -5,7 +5,7 @@ const usersData = require('../controllers/users');
 
 router.get('/', usersData.getAllUsers);
 
-router.get('/:id', usersData.getSingleUser);
+router.get('/:name', usersData.getSingleUser);
 
 router.post('/', usersData.createUser);
 

@@ -1,5 +1,5 @@
 const mongodb = require('../db/connect');
-const ObjectId = require('mongodb').ObjectId;
+// const ObjectId = require('mongodb').ObjectId;
 
 // Function to get all users from the database
 const getAllUsers = async (req, res) => {
@@ -16,12 +16,12 @@ const getAllUsers = async (req, res) => {
 // Function to get a single user data from the database by its id
 const getSingleUser = async (req, res) => {
   try {
-    const userId = new ObjectId(req.params.id);
+    const userName = req.params.name;
     const result = await mongodb
       .getDb()
       .db('task_mgt_sys')
       .collection('users')
-      .findOne({ _id: userId });
+      .findOne({ name: userName });
     if (!result) {
       res.status(404).json({ message: 'Object not found' });
     } else {
@@ -33,7 +33,7 @@ const getSingleUser = async (req, res) => {
   }
 };
 
-// Function to create a new user and associate tasks
+// Function to create a new user without associating tasks
 const createUser = async (req, res) => {
   try {
     const user = {
@@ -49,27 +49,10 @@ const createUser = async (req, res) => {
       }
     };
 
-    const tasks = req.body.tasks; // Assuming tasks are provided in the request body
-
-    // Create a new user and associate tasks
     const response = await mongodb.getDb().db('task_mgt_sys').collection('users').insertOne(user);
 
     if (response.acknowledged) {
-      const insertedUserId = response.insertedId;
-      const taskResponse = await mongodb
-        .getDb()
-        .db('task_mgt_sys')
-        .collection('tasks')
-        .updateMany(
-          { _id: { $in: tasks.map((taskId) => new ObjectId(taskId)) } },
-          { $set: { assignedTo: insertedUserId } }
-        );
-
-      if (taskResponse.acknowledged) {
-        res.status(201).json({ message: 'User created successfully' });
-      } else {
-        res.status(500).json({ message: 'Error occurred while associating tasks with the user' });
-      }
+      res.status(201).json({ message: 'User created successfully' });
     } else {
       res.status(500).json(response.error || 'Some error occurred while creating the user.');
     }
