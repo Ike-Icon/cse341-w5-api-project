@@ -21,8 +21,6 @@ Content-Type: application/json
 GET http://localhost:3000/users/John Doe
 
 
-
-
 # Tasks On Localhost
 ### 
 GET http://localhost:3000/tasks HTTP/1.1
@@ -49,4 +47,53 @@ Content-Type: application/json
 DELETE http://localhost:3000/tasks/Mike Johnson HTTP/1.1
 
 
+
+
 # Users On Render
+###
+GET https://tasks-mgt-sys-w5.onrender.com/users
+
+###
+POST https://tasks-mgt-sys-w5.onrender.com/users
+Content-Type: application/json
+{
+    "name": "John Doe",
+    "email": "johndoe@gmail.com",
+    "password": "encrypted_password_1",
+    "role": "Admin",
+    "department": "Management",
+    "joinDate": "2022-01-01",
+    "additionalFields": {
+      "contactNumber": "1234567890",
+      "profilePicture": "https://gmail.com/profile/johndoe.jpg"
+    }
+}
+
+###
+GET https://tasks-mgt-sys-w5.onrender.com/users/John Doe
+
+
+# Tasks
+###
+GET https://tasks-mgt-sys-w5.onrender.com/tasks
+
+###
+POST https://tasks-mgt-sys-w5.onrender.com/tasks
+Content-Type: application/json
+
+{
+    "title": "Write Test Cases",
+    "assignedTo": "Sarah Thompson",
+    "description": "Create comprehensive test cases for the application",
+    "status": "In Progress",
+    "priority": "Medium",
+    "deadline": "2023-07-10",
+    "additionalFields": {
+      "automatedTesting": true,
+      "coveragePercentage": 80
+    }
+  }
+
+
+### Delete Tast by Name assigned to it
+DELETE http://localhost:3000/tasks/Mike Johnson HTTP/1.1
