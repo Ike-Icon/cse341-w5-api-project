@@ -1,51 +1,12 @@
 const express = require('express');
-const { graphqlHTTP } = require('express-graphql');
-const { buildSchema } = require('graphql');
+const router = express.Router();
 
 const usersData = require('../controllers/users');
 
-// Define the GraphQL schema users 
-const schema = buildSchema(`
-  type User {
-    id: ID!
-    name: String!
-    email: String!
-    password: String!
-    role: String!
-    department: String!
-    joinDate: String!
-    contactNumber: String
-    profilePicture: String
-  }
+router.get('/', usersData.getAllUsers);
 
-  type Query {
-    getAllUsers: [User]
-    getSingleUser(name: String!): User
-  }
+router.get('/:name', usersData.getSingleUser);
 
-  type Mutation {
-    createUser(name: String!, email: String!, password: String!, role: String!, department: String!, joinDate: String!, contactNumber: String, profilePicture: String): User
-  }
-`);
-
-// Define your resolver functions
-const root = {
-  getAllUsers: usersData.getAllUsers,
-  getSingleUser: usersData.getSingleUser,
-  createUser: usersData.createUser
-};
-
-// Create the Express router
-const router = express.Router();
-
-// Set up the GraphQL endpoint
-router.use(
-  '/graphql',
-  graphqlHTTP({
-    schema: schema,
-    rootValue: root,
-    graphiql: true // Enable GraphiQL for testing the API
-  })
-);
+router.post('/', usersData.createUser);
 
 module.exports = router;
