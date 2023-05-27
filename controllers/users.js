@@ -1,5 +1,5 @@
 const mongodb = require('../db/connect');
-// const ObjectId = require('mongodb').ObjectId;
+const passwordUtil = require('../util/passwordUtil');
 
 // Function to get all users from the database
 const getAllUsers = async (req, res) => {
@@ -22,8 +22,9 @@ const getSingleUser = async (req, res) => {
       .db('task_mgt_sys')
       .collection('users')
       .findOne({ name: userName });
+
     if (!result) {
-      res.status(404).json({ message: 'Object not found' });
+      res.status(404).json({ message: 'User not found' });
     } else {
       res.status(200).json(result);
     }
@@ -49,12 +50,84 @@ const createUser = async (req, res) => {
       }
     };
 
+    // Validate password
+    const isPasswordValid = req.body.password;
+    const passwordCheck = passwordUtil.passwordPass(isPasswordValid);
+    if (passwordCheck.error) {
+      res.status(400).json({ message: passwordCheck.error });
+      return;
+    }
+
     const response = await mongodb.getDb().db('task_mgt_sys').collection('users').insertOne(user);
 
     if (response.acknowledged) {
       res.status(201).json({ message: 'User created successfully' });
     } else {
-      res.status(500).json(response.error || 'Some error occurred while creating the user.');
+      res.status(500).json({ message: 'Some error occurred while creating the user.' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+const updateUser = async (req, res) => {
+  try {
+    const userName = req.params.name;
+
+    const user = {
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+      role: req.body.role,
+      department: req.body.department,
+      joinDate: req.body.joinDate,
+      additionalFields: {
+        contactNumber: req.body.contactNumber,
+        profilePicture: req.body.profilePicture
+      }
+    };
+
+    // Validate password
+    const isPasswordValid = req.body.password;
+    const passwordCheck = passwordUtil.passwordPass(isPasswordValid);
+    if (passwordCheck.error) {
+      res.status(400).json({ message: passwordCheck.error });
+      return;
+    }
+
+    const response = await mongodb
+      .getDb()
+      .db('task_mgt_sys')
+      .collection('users')
+      .replaceOne({ name: userName }, user);
+
+    console.log(response);
+    if (response.modifiedCount > 0) {
+      res.status(204).send();
+    } else {
+      res.status(500).json({ message: 'Some error occurred while updating the user.' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+const deleteUser = async (req, res) => {
+  try {
+    const userName = req.params.name;
+    const response = await mongodb
+      .getDb()
+      .db('task_mgt_sys')
+      .collection('users')
+      .deleteOne({ name: userName });
+
+    console.log(response);
+    if (response.deletedCount > 0) {
+      res.status(204).send({ message: 'User deleted successfully' });
+    } else {
+      res.status(500).json({ message: 'Some error occurred while deleting the user.' });
     }
   } catch (error) {
     console.error(error);
@@ -65,5 +138,7 @@ const createUser = async (req, res) => {
 module.exports = {
   getAllUsers,
   getSingleUser,
-  createUser
+  createUser,
+  updateUser,
+  deleteUser
 };

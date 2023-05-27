@@ -2,11 +2,11 @@ const swaggerAutogen = require('swagger-autogen')();
 
 const doc = {
   info: {
-    title: 'Tasks Mgt System',
-    description: 'Tasks Mgt System API'
+    title: 'Tasks Management System',
+    description: 'API documentation for Tasks Management System'
   },
   host: 'localhost:3000',
-  schemes: ['http']
+  schemes: ['https','http']
 };
 
 const outputFile = './swagger.json';

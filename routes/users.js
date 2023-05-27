@@ -9,4 +9,8 @@ router.get('/:name', usersData.getSingleUser);
 
 router.post('/', usersData.createUser);
 
+router.put('/:name', usersData.updateUser);
+
+router.delete('/:name', usersData.deleteUser);
+
 module.exports = router;

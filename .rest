@@ -4,6 +4,7 @@ GET http://localhost:3000/users
 ### POST New User
 POST  http://localhost:3000/users
 Content-Type: application/json
+
 {
     "name": "John Doe",
     "email": "johndoe@gmail.com",
@@ -18,7 +19,25 @@ Content-Type: application/json
 }
 
 ### GET User By NAME
-GET http://localhost:3000/users/John Doe
+GET http://localhost:3000/users/Jane Smith
+
+###
+PUT http://localhost:3000/users/Jane Smith
+Content-Type: application/json
+
+{
+    "name": "Jane Smith",
+    "email": "janesmith@gmail.com",
+    "password": "Passwor@23",
+    "role": "Manager",
+    "department": "Sales",
+    "joinDate": "2022-02-15",
+    "additionalFields": {
+      "contactNumber": "9876543210",
+      "profilePicture": "https://gmail.com/profile/janesmith.jpg"
+    }
+}
+
 
 
 # Tasks On Localhost
