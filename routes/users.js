@@ -13,4 +13,6 @@ router.put('/:name', usersData.updateUser);
 
 router.delete('/:name', usersData.deleteUser);
 
+router.post('/login', usersData.logIn);
+
 module.exports = router;
