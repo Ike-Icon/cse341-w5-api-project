@@ -1,6 +1,38 @@
 const mongodb = require('../db/connect');
 const passwordUtil = require('../util/passwordUtil');
 
+// Login function
+const logIn = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Check if the user exists in the database
+    const user = await mongodb
+      .getDb()
+      .db('task_mgt_sys')
+      .collection('users')
+      .findOne({ email: email });
+
+    if (!user) {
+      res.status(404).json({ message: 'User not found' });
+      return;
+    }
+
+    // Verify the password
+    const isPasswordValid = await passwordUtil.comparePasswords(password, user.password);
+    if (!isPasswordValid) {
+      res.status(401).json({ message: 'Invalid password' });
+      return;
+    }
+
+    // Login successful
+    res.status(200).json({ message: 'Login successful' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 // Function to get all users from the database
 const getAllUsers = async (req, res) => {
   try {
@@ -140,5 +172,6 @@ module.exports = {
   getSingleUser,
   createUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  logIn
 };
