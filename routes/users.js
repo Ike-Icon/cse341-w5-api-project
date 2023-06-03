@@ -15,4 +15,6 @@ router.delete('/:name', usersData.deleteUser);
 
 router.post('/login', usersData.logIn);
 
+router.get('/auth/google/callback', usersData.logInCallback);
+
 module.exports = router;
