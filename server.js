@@ -1,15 +1,15 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongodb = require('./db/connect');
-const passport = require('./passport');
+const passport = require('passport');
 const session = require('express-session');
 const app = express();
 const exphbs = require('express-handlebars');
+const mongodb = require('./db/connect');
 const port = process.env.PORT || 3000;
 
-// // Passport config
-// (passport)
+// Passport config
+require('./passport');
 
 app
   .use(bodyParser.json())
@@ -27,8 +27,7 @@ app
     session({
       secret: 'keyboard cat',
       resave: false,
-      saveUninitialized: false,
-      
+      saveUninitialized: false
     })
   )
 
@@ -41,9 +40,6 @@ app
 
   // Routes
   .use('/', require('./routes'));
-
-
-  
 
 mongodb.initDb((err) => {
   if (err) {

@@ -20,7 +20,7 @@ router.get('/', ensureGuest, (req, res) => {
 // @route   GET /dashboard
 router.get('/dashboard', ensureAuth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).lean();
+    const user = await User.findOne({ email: req.user.email }).lean();
     res.render('dashboard', {
       name: req.user.name,
       user

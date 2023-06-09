@@ -1,7 +1,6 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const mongodb = require('../db/connect');
-
+const mongodb = require('./db/connect');
 
 passport.serializeUser((user, done) => {
   done(null, user);
@@ -20,6 +19,16 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
+        if (
+          !profile ||
+          !profile.id ||
+          !profile.displayName ||
+          !profile.emails ||
+          !profile.emails[0].value
+        ) {
+          throw new Error('Invalid profile data');
+        }
+
         // Check if the user exists in the database
         const existingUser = await mongodb
           .getDb()
@@ -57,3 +66,5 @@ passport.use(
     }
   )
 );
+
+module.exports = passport;
