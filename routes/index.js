@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { ensureAuth, ensureGuest } = require('../middleware/auth');
-const User = require('../controllers/users');
+const Task = require('../models/task');
 
 router.use('/', require('./swagger'));
 router.use('/users', require('./users'));
@@ -20,15 +20,23 @@ router.get('/', ensureGuest, (req, res) => {
 // @route   GET /dashboard
 router.get('/dashboard', ensureAuth, async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.user.email }).lean();
+    const taskAssignedTo = req.user._id; // Fetch tasks assigned to the logged-in user
+    const tasks = await Task.find({ assignedTo: taskAssignedTo }).lean();
     res.render('dashboard', {
-      name: req.user.name,
-      user
+      name: req.user.firstName,
+      tasks
     });
   } catch (err) {
     console.error(err);
     res.render('error/500');
   }
+});
+
+
+
+// Redirect after successful login with Google or email
+router.get('/auth/success', (req, res) => {
+  res.redirect('/dashboard');
 });
 
 module.exports = router;

@@ -1,9 +1,22 @@
-<h3><i class="fas fa-book-reader"></i> User Tasks</h3>
+<h3><i class="fas fa-tasks"></i> Tasks Mgt System</h3>
 <div class="section">
     <p class="lead">View, Create, and Update your Tasks here</p>
 </div>
 <div class="divider"></div>
 <div class="section">
+    <form action="/auth/login" method="POST">
+        <div class="input-field">
+            <input type="email" id="email" name="email" required>
+            <label for="email">Email</label>
+        </div>
+        <div class="input-field">
+            <input type="password" id="password" name="password" required>
+            <label for="password">Password</label>
+        </div>
+        <button class="btn red darken-1" type="submit">
+            Log In
+        </button>
+    </form><br>
     <a href="/auth/google" class="btn red darken-1">
         <i class="fab fa-google left"></i> Log In With Google
     </a>
