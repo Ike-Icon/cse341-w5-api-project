@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const session = require('express-session');
 const app = express();
 const mongodb = require('./db/connect');
 const port = process.env.PORT || 3000;
@@ -15,7 +16,14 @@ app
     next();
   })
 
-
+// Sessions
+  .use(
+  session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false
+  })
+)
 
   // Passport middleware
   .use(passport.initialize())
