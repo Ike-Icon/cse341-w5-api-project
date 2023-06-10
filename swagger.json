@@ -310,7 +310,7 @@
         "tags": [
           "Tasks"
         ],
-        "summary": "Create a new task",
+        "summary": "Create new task",
         "description": "Create a new task\nwith the provided information.",
         "parameters": [
           {
